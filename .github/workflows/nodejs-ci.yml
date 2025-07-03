@@ -1,0 +1,61 @@
+# .github/workflows/nodejs-ci.yml
+    name: Node.js CI/CD Pipeline
+
+    on:
+      push:
+        branches:
+          - main # Ejecuta el workflow cada vez que se haga push a la rama 'main'
+      pull_request:
+        branches:
+          - main # También lo ejecuta cuando hay un pull request a 'main'
+
+    jobs:
+      build-test-and-package:
+        runs-on: ubuntu-latest # El sistema operativo del runner de GitHub Actions
+
+        steps:
+        - name: Checkout Repository # Paso 1: Clonar el repositorio
+          uses: actions/checkout@v4
+          # Esta acción descarga tu código en el entorno del runner.
+
+        - name: Set up Node.js Environment # Paso 2: Configurar el entorno de Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '18' # Define la versión de Node.js a usar. Puedes cambiarla si lo necesitas.
+            cache: 'npm' # Habilita el caché para las dependencias de npm, acelerando futuras ejecuciones.
+          # Esta acción configura Node.js y npm en el runner, listo para usar.
+
+        - name: Install Dependencies # Paso 3: Instalar las dependencias del proyecto
+          run: npm ci # 'npm ci' es más rápido y seguro para CI/CD que 'npm install'
+          # Este comando instala todas las dependencias listadas en package.json.
+          # Es un paso crucial para preparar el entorno para la compilación y las pruebas.
+
+        - name: Compile Code (Conceptual for Node.js) # Paso 4: "Compilar" el código (conceptual)
+          # Para Node.js, no hay una "compilación" tradicional como en Java o C#.
+          # Este paso puede usarse para:
+          # - Ejecutar un linter (ej. ESLint) para verificar la calidad del código.
+          # - Transpilar código (ej. de TypeScript a JavaScript, o usar Babel).
+          run: echo "Node.js es interpretado, la 'compilación' es conceptual o para transpilación/linting."
+          # Ejemplo si tuvieras un linter:
+          # run: npm run lint
+
+        - name: Run Unit Tests # Paso 5: Ejecutar las pruebas unitarias
+          run: npm test # Ejecuta el script 'test' definido en package.json (que ejecuta Mocha).
+          # Si alguna prueba falla, este paso fallará y detendrá el workflow, indicando un problema.
+          # Esto es el corazón de la Integración Continua.
+
+        - name: Build Application / Package (Conceptual) # Paso 6: "Build" o empaquetado (opcional para Node.js)
+          # Para Node.js, un "build" podría implicar:
+          # - Minificar archivos JavaScript/CSS.
+          # - Empaquetar la aplicación para producción (ej. con Webpack, Parcel).
+          # - Crear una imagen Docker de la aplicación.
+          run: echo "Realizando un 'build' conceptual para la aplicación Node.js."
+          # Ejemplo si tuvieras un script de build real:
+          # run: npm run build
+          # Si generas artefactos, puedes subirlos:
+          # - name: Upload build artifacts
+          #   uses: actions/upload-artifact@v4
+          #   with:
+          #     name: nodejs-app-build
+          #     path: dist/ # O la ruta donde tu build genere los archivos
+    

@@ -1,0 +1,21 @@
+# Ignorar la carpeta de módulos de Node.js
+node_modules/
+
+# Ignorar archivos de log y temporales
+npm-debug.log*
+.env
+.DS_Store
+*.log
+*.tmp
+*.bak
+
+# Ignorar archivos de build/dist (si los tuvieras)
+dist/
+build/
+
+# Ignorar caché de npm
+.npm/
+.npmrc
+
+# Ignorar archivos específicos del sistema operativo
+.vscode/ # Si no quieres compartir configuraciones de VS Code
