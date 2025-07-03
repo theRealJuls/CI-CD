@@ -1,18 +1,14 @@
-// app.js
-const express = require('express'); // Importa el framework Express
-const app = express(); // Crea una instancia de la aplicación Express
-const port = 3000; // Define el puerto en el que la aplicación escuchará
+    // app.js (ES Modules)
+    import express from 'express'; // Usa import en lugar de require
+    const app = express();
+    const port = 3000;
 
-// Define una ruta GET para la raíz de la aplicación ('/')
-app.get('/', (req, res) => {
-  // Cuando se accede a la ruta, envía un mensaje de texto como respuesta
-  res.send('¡Hola desde mi app Node.js CI/CD!');
-});
+    app.get('/', (req, res) => {
+      res.send('¡Buenas tardes profesor espero se encuentre bien!'); 
+    });
 
-// La aplicación comienza a escuchar en el puerto definido
-app.listen(port, () => {
-  console.log(`La aplicación está escuchando en http://localhost:${port}`);
-});
+    app.listen(port, () => {
+      console.log(`La aplicación está escuchando en http://localhost:${port}`);
+    });
 
-// Exporta la instancia de la aplicación para que pueda ser utilizada por los archivos de prueba
-module.exports = app;
+    export default app; // Usa export default en lugar de module.exports
